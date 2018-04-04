@@ -29,5 +29,7 @@ class ProfessionSeeder extends Seeder
        Profession::create(['title' => 'Desarrollador Frock-end']);
 
        Profession::create(['title' => 'Desarrollador Diseños']);
+
+       Factory(Profession::class,17)->create();
     }
 }

@@ -31,7 +31,15 @@ class UserSeeder extends Seeder
             'name' => 'Richard',
             'email' =>'draox17@gmail.com',
             'password' => bcrypt('dorta'),
-            'profession_id' => $profesionID
+            'profession_id' => $profesionID,
+            'is_admin' => true,
+          ]);
+
+          $professions = Profession::all();
+
+          factory(User::class, 49)->create([
+            'profession_id' => $professions->random(),
+            'is_admin' => false,
           ]);
     }
 }
