@@ -1,7 +1,19 @@
 @extends('layout')
 @section('title',$title)
 @section('contenido')
-  <h1>{{$title}}</h1>
 
-  <p>detalle del usuario con el id ={{$id}}</p>
+  <div class="card text-white bg-dark">
+    <div class="card-header">
+      <h4 class="card-title">
+        <a class="btn btn-sm btn-secondary" href="{{route('users')}}">
+          <i class="fas fa-arrow-left"></i>
+        </a>&nbsp;Detalle del usuarios Nº ({{$user->id}})</h4>
+    </div>
+    <div class="card-body">
+      <p>Nombre : {{$user->name}}</p>
+      <p>Email : {{$user->email}}</p>
+      <p>Profesion : {{$user->profession->title}}</p>
+    </div>
+  </div>
+
 @endsection
