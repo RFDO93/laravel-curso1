@@ -24,7 +24,26 @@
         @else
         <td> - </td>
         @endif
-        <td><a class="btn btn-secondary btn-sm" href="{{route('users.show',['id'=>$value->id])}}"><i class="fas fa-clipboard-check"></i></a></td>
+        <td>
+          <div class="row">
+            <a class="btn btn-secondary btn-sm" href="{{route('users.show',['id'=>$value->id])}}">
+              <i class="fas fa-clipboard-check">
+              </i>
+            </a>
+            <a class="btn btn-info btn-sm" href="{{route('users.edit',['id'=>$value->id])}}">
+              <i class="fas fa-edit">
+              </i>
+            </a>
+            <div style="float:left">
+              <form action="{{route('users.delete',['id'=>$value->id])}}" method="post" name="form-delete">
+                {!!csrf_field()!!}
+                {!!method_field('DELETE')!!}
+                <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+              </form>
+            </div>
+          </div>
+        </td>
+
       </tr>
     @empty
       <tr>

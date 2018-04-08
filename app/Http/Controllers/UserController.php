@@ -50,11 +50,8 @@ class UserController extends Controller
       return view('user.create',['title' => $title]);
     }
 
-    public function edit($id){
-
-      $title = 'Editar usuario';
-
-      return view('user.edit', ['title' => $title,'id' => $id]);
+    public function edit(User $user){
+      return view('user.edit', ['user' => $user]);
     }
 
     public function store(){
@@ -80,6 +77,37 @@ class UserController extends Controller
           'password'  => bcrypt($data['clave']),
       ]);
 
+      return redirect()->route('users');
+    }
+
+    public function update(User $user){
+
+      $data = request()->validate([
+        'nombre'   => 'required',
+        'email'    => 'required|email|unique:users,email,'.$user->id,
+        'clave' => '',
+      ],
+      [
+        'nombre.required' => 'El campo nombre debe ser obligatorio.',
+        'email.required' => 'El campo email debe ser obligatorio.',
+        'email.email'   => 'El campo email debe ser de formato email.',
+        'email.unique' => 'El email ya ha sido registrado.',
+        'clave.min' => 'La clave debe ser minimo de 6 caracteres',
+        'clave.max' => 'La clave debe ser maximo de 12 caracteres',
+      ]);
+
+      $data['name'] = $data['nombre'];
+      if ($data['clave']!=null) {
+        $data['password'] = bcrypt($data['clave']);
+      }
+
+      $user->update($data);
+
+      return redirect()->route('users.show',['user'=>$user->id]);
+    }
+
+    public function delete(User $user){
+      $user->delete();
       return redirect()->route('users');
     }
 }
